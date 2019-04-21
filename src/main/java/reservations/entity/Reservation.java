@@ -20,6 +20,14 @@ public class Reservation {
     @Column(name="TOTAL_PRICE")
     private double totalPrice;
 
+    @ManyToOne
+    @JoinColumn(name = "ROOM_ID")
+    private Room room;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
     public Long getResId() {
         return resId;
     }
@@ -52,6 +60,22 @@ public class Reservation {
         this.totalPrice = totalPrice;
     }
 
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +
@@ -59,6 +83,8 @@ public class Reservation {
                 ", date=" + date +
                 ", numberOfPlayers=" + numberOfPlayers +
                 ", totalPrice=" + totalPrice +
+                ", room=" + room.getRoomId() +
+                ", user=" + user.getUserId() +
                 '}';
     }
 }

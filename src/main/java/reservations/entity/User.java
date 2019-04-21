@@ -1,6 +1,8 @@
 package reservations.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="USER")
@@ -21,6 +23,10 @@ public class User {
 
     @Column(name="PHONE_NUMBER")
     private String phoneNumber;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "USER_ID")
+    private Set<Reservation> reservation =  new HashSet();
 
     public Long getUserId() {
         return userId;
@@ -62,6 +68,14 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public Set<Reservation> getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Set<Reservation> reservation) {
+        this.reservation = reservation;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -70,6 +84,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", reservation=" + reservation +
                 '}';
     }
 }

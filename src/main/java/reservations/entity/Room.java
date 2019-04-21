@@ -1,6 +1,10 @@
 package reservations.entity;
 
+import reservations.enums.Categories;
+import reservations.enums.Levels;
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="ROOM")
@@ -28,11 +32,11 @@ public class Room {
     @Column(name="DESCRIPTION")
     private String description;
 
-    @Column(name="LEVEL")
-    private String level;
+    @Enumerated(EnumType.STRING)
+    private Levels level;
 
-    @Column(name="CATEGORY")
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Categories category;
 
     @Column(name="GAME_DURATION")
     private int gameDuration;
@@ -48,6 +52,10 @@ public class Room {
 
     @Column(name="ADDRESS")
     private String address;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ROOM_ID")
+    private Set<Reservation> reservation =  new HashSet();
 
     public Long getRoomId() {
         return roomId;
@@ -105,19 +113,19 @@ public class Room {
         this.description = description;
     }
 
-    public String getLevel() {
+    public Levels getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(Levels level) {
         this.level = level;
     }
 
-    public String getCategory() {
+    public Categories getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Categories category) {
         this.category = category;
     }
 
@@ -161,6 +169,14 @@ public class Room {
         this.address = address;
     }
 
+    public Set<Reservation> getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Set<Reservation> reservation) {
+        this.reservation = reservation;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
@@ -178,6 +194,7 @@ public class Room {
                 ", startHour=" + startHour +
                 ", endHour=" + endHour +
                 ", address='" + address + '\'' +
+                ", reservation=" + reservation +
                 '}';
     }
 
